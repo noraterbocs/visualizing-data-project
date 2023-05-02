@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Chart } from 'react-google-charts';
+// import styled from 'styled-components/macro';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel
+} from 'react-accessible-accordion';
+import { DataTable } from 'DataTable';
 import { Loading } from './Loading';
+import 'react-accessible-accordion/dist/fancy-example.css';
 
 export const Data = () => {
   const [salesData, setSalesData] = useState([]);
+  const [salesRankData, setSalesRankData] = useState([]);
   const [loading, setLoading] = useState(false)
   const [pageNumber, setPageNumber] = useState(1)
   //   const [limit, setLimit] = useState(20)
-  console.log(salesData)
   const fetchSalesData = () => {
     setLoading(true)
-    fetch(`https://project-express-api-cpxm366faa-lz.a.run.app/sales?page=${pageNumber}&limit=20`)
+    fetch(`https://project-express-api-cpxm366faa-lz.a.run.app/sales?page=${pageNumber}&limit=10`)
       .then((res) => res.json())
       .then((data) => {
         setSalesData(data.results)
@@ -22,8 +31,26 @@ export const Data = () => {
         setLoading(false)
       })
   }
+
+  const fetchSalesRankData = () => {
+    setLoading(true)
+    fetch('https://project-express-api-cpxm366faa-lz.a.run.app/salesRank')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.body.salesRanking)
+        setSalesRankData(data.body.salesRanking)
+      })
+      .catch((e) => {
+        console.error(console.error(e))
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
   useEffect(() => {
     fetchSalesData();
+    fetchSalesRankData();
   }, [pageNumber]);
 
   if (loading) {
@@ -31,29 +58,38 @@ export const Data = () => {
       <Loading />
     );
   }
-
-  const newData = salesData.map(((item) => {
-    return [
-      item.date,
-      item.averagePrice,
-      item.totalVolume,
-      item.totalBagsSold,
-      //   item.smallBagsSold,
-      //   item.largeBagsSold,
-      //   item.xLargeBagsSold,
-      item.region]
-  }))
-  const data = [
-    ['Date', 'Average Price', 'Total volume', 'Total bags sold', 'Region'], ...newData
-  ];
-
-  console.log(data)
+  const handleExpanded = () => {
+    console.log('Accordion item expanded');
+  };
 
   return (
-    <div>
-      {loading === false && salesData !== undefined && <Chart chartType="Table" width="100%" height="400px" data={data} />}
-      <button onClick={() => setPageNumber((prevPageNumber) => prevPageNumber - 1)} type="button">Previous Page</button>
-      <button onClick={() => setPageNumber((prevPageNumber) => prevPageNumber + 1)} type="button">Next Page</button>
-    </div>
+    <Accordion allowZeroExpanded>
+      <AccordionItem onClick={() => handleExpanded()}>
+        <AccordionItemHeading>
+          <AccordionItemButton>
+                       Sales data of avocado sales
+          </AccordionItemButton>
+        </AccordionItemHeading>
+        <AccordionItemPanel>
+          <div>
+            {salesData !== undefined
+         && <DataTable salesData={salesData} setPageNumber={setPageNumber} />}
+          </div>
+        </AccordionItemPanel>
+      </AccordionItem>
+      <AccordionItem>
+        <AccordionItemHeading>
+          <AccordionItemButton>
+                       Highest and lowest sales records
+          </AccordionItemButton>
+        </AccordionItemHeading>
+        <AccordionItemPanel>
+          <div>
+            {salesData !== undefined
+         && <DataTable salesData={salesRankData} />}
+          </div>
+        </AccordionItemPanel>
+      </AccordionItem>
+    </Accordion>
   )
 }
