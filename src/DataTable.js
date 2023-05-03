@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import ReactModal from 'react-modal';
+import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from 'react-icons/bs'
 
 const createData = (id, date, averagePrice, totalVolume, totalBagsSold, region) => {
   return { id, date, averagePrice, totalVolume, totalBagsSold, region };
@@ -35,9 +36,6 @@ export const DataTable = ({ salesData, setPageNumber, setLimit, setLoading }) =>
     item.totalBagsSold,
     item.region
   ));
-  // useEffect(() => {
-  //   console.log(singleSalesData);
-  // }, [singleSalesData]);
 
   return (
     <Container>
@@ -74,7 +72,7 @@ export const DataTable = ({ salesData, setPageNumber, setLimit, setLoading }) =>
             isOpen={isOpen}
             contentLabel="Example Modal"
             onRequestClose={() => setIsOpen(false)}
-            style={{ overlay: { width: '100%', height: '100%', margin: 'auto' }, content: { width: 'max-content', height: 'max-content', margin: 'auto' } }}>
+            style={{ overlay: { width: '100%', height: '100%', margin: 'auto', backgroundColor: 'rgb(233 196 228 / 75%)' }, content: { width: 'max-content', height: 'max-content', margin: 'auto' } }}>
            <div>{singleSalesData !== undefined && <div>
             <p>ID: {singleSalesData.id}</p>
             <p>Date: {singleSalesData.date}</p>
@@ -91,9 +89,13 @@ export const DataTable = ({ salesData, setPageNumber, setLimit, setLoading }) =>
         </tbody>
       </Table>
       <ButtonContainer>
-        <button onClick={() => setPageNumber((prevPageNumber) => prevPageNumber - 1)} type="button">Previous Page</button>
-        <button onClick={() => setPageNumber((prevPageNumber) => prevPageNumber + 1)} type="button">Next Page</button>
-        <button onClick={() => setLimit((prevLimit) => prevLimit + 5)} type="button">Show more</button>
+        <Button onClick={() => setPageNumber((prevPageNumber) => prevPageNumber - 1)} type="button">
+          <BsFillArrowLeftCircleFill />
+        </Button>
+        <Button onClick={() => setPageNumber((prevPageNumber) => prevPageNumber + 1)} type="button">
+          <BsFillArrowRightCircleFill />
+        </Button>
+        <Button onClick={() => setLimit((prevLimit) => prevLimit + 5)} type="button">Show more</Button>
       </ButtonContainer>
     </Container>
   );
@@ -128,18 +130,18 @@ const Table = styled.table`
 const ButtonContainer = styled.div`
   margin-top: 1rem;
   text-align: center;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+`
 
-  button {
-    margin: 0 0.5rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
-    background-color: #fff;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-
-  button:hover {
-    background-color: #ddd;
+const Button = styled.button`
+background-color:transparent;
+border:none;
+cursor:pointer;
+margin:0;
+padding:0;
+:hover {
+    transform: scale(1.1);
   }
 `

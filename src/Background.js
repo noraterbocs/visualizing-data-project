@@ -6,11 +6,13 @@ export const BackgroundImage = () => {
 };
 
 const BackgroundImg = styled.img`
-    background-image: url('/images/background.jpg');;
-    background-size: cover;
-    width: 100%;
+    background-image:linear-gradient(rgba(250, 250, 250, 0.5), rgba(250, 250, 250, 0.5)), url('/images/background.jpg');
+     background-size:cover;
+     width:100%;
+     height:100%;
+    background-repeat: no-repeat;
     position: absolute;
     top: 0;
-    height: 100%;
-    z-index: -1
+    z-index: -1;
+    
 `
