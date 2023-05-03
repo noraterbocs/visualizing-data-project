@@ -9,27 +9,24 @@ const createData = (id, date, averagePrice, totalVolume, totalBagsSold, region) 
 }
 
 export const DataTable = ({ salesData, setPageNumber, setLimit, setLoading }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  // const [singleSalesData, setSingleSalesData] = useState([])
-  const handleOpenModal = (id) => {
-  setLoading(true);
-  setIsOpen(true);
-  // const fetchSingleSalesData = (id) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [singleSalesData, setSingleSalesData] = useState()
+  const fetchSingleSalesData = (id) => {
     fetch(`https://project-express-api-cpxm366faa-lz.a.run.app/sales/${id}`)
       .then((res) => res.json())
       .then((data) => {
-      setLoading(false);
-        console.log(data.body.singleSales)
+        console.log(data.body.data)
+        setSingleSalesData(data.body.data)
       })
       .catch((e) => {
         console.error(console.error(e))
       })
-      // .finally(() => {
-      //   // setIsOpen(true);
-      //   // setTimeout(setLoading(false), 5000)
-      // })
-  // }
-}
+      .finally(() => {
+        setTimeout(setLoading(false), 5000)
+        setIsOpen(true)
+      })
+  }
+
   const rows = salesData.map((item) => createData(
     item.id,
     item.date,
@@ -60,7 +57,7 @@ export const DataTable = ({ salesData, setPageNumber, setLimit, setLoading }) =>
             <tr
               onClick={
                 () => {
-                  handleOpenModal(row.id);
+                  fetchSingleSalesData(row.id);
                 }
               }
               key={row.id}>
@@ -76,25 +73,20 @@ export const DataTable = ({ salesData, setPageNumber, setLimit, setLoading }) =>
           <ReactModal
             isOpen={isOpen}
             contentLabel="Example Modal"
-            onRequestClose={() => setIsOpen(false)}>
-            {singleSalesData !== undefined && singleSalesData.length !== 0
-            && singleSalesData.map((item) => {
-              console.log(item)
-              return (
-                <div>
-                  <h3>Total Volume: {item.totalVolume}</h3>
-                  <h4>Date: {item.date}</h4>
-                  <p>Average Price: {item.averagePrice}</p>
-                  <div>
-                    <p>Total Bags Sold: {item.totalBagsSold}</p>
-                    <p>Small Bags Sold: {item.smallBagsSold}</p>
-                    <p>Large Bags Sold: {item.largeBagsSold}</p>
-                    <p>XLarge Bags Sold: {item.xLargeBagsSold}</p>
-                  </div>
-                  <p>Region: {item.region}</p>
-                </div>
-              )
-            })}
+            onRequestClose={() => setIsOpen(false)}
+            style={{ overlay: { width: '100%', height: '100%', margin: 'auto' }, content: { width: 'max-content', height: 'max-content', margin: 'auto' } }}>
+           <div>{singleSalesData !== undefined && <div>
+            <p>ID: {singleSalesData.id}</p>
+            <p>Date: {singleSalesData.date}</p>
+            <p>Average Price: {singleSalesData.averagePrice}</p>
+            <p>Total Volume: {singleSalesData.totalVolume}</p>
+            <p>Total Bags Sold: {singleSalesData.totalBagsSold}</p>
+            <p>Small Bags Sold: {singleSalesData.smallBagsSold}</p>
+            <p>Large Bags Sold: {singleSalesData.largeBagsSold}</p>
+            <p>Extra Large Bags Sold: {singleSalesData.xLargeBagsSold}</p>
+            <p>Region: {singleSalesData.region}</p>
+                                                  </div>}
+           </div>
           </ReactModal>
         </tbody>
       </Table>
