@@ -9,7 +9,7 @@ export const App = () => {
   return (
     <><GlobalStyle />
       <BackgroundImage />
-      <div style={{ maxWidth: '600px', margin: 'auto' }}>
+      <div style={{ maxWidth: '600px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', margin: 'auto' }}>
         <StartPage />
         <Data />
         <Footer />

@@ -4,10 +4,10 @@ import styled from 'styled-components/macro';
 export const StartPage = () => {
   return (
     <Section>
-      <h1>Avocado in numbers</h1>
-      <h2>Welcome to my avocado sales data site!</h2>
-      <p>The page provides information on sales volume, average prices,
-        and more, for different regions and time periods in the United States.
+      <h1>Welcome to my avocado dashboard!</h1>
+      {/* <h2>This website </h2> */}
+      <p>The page provides information on sales volume and average prices
+        for different regions and time periods in the United States.
       </p>
     </Section>
   )
@@ -15,4 +15,8 @@ export const StartPage = () => {
 
 const Section = styled.section`
 padding:2em;
+
+h1{
+    text-align:center;
+}
 `

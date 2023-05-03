@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import ReactModal from 'react-modal';
-import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from 'react-icons/bs'
+import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from 'react-icons/bs';
+import { MdOutlineExpandMore } from 'react-icons/md'
 
 const createData = (id, date, averagePrice, totalVolume, totalBagsSold, region) => {
   return { id, date, averagePrice, totalVolume, totalBagsSold, region };
@@ -88,6 +89,7 @@ export const DataTable = ({ salesData, setPageNumber, setLimit, setLoading }) =>
           </ReactModal>
         </tbody>
       </Table>
+      <Button onClick={() => setLimit((prevLimit) => prevLimit + 5)} type="button"><MdOutlineExpandMore /> Show more</Button>
       <ButtonContainer>
         <Button onClick={() => setPageNumber((prevPageNumber) => prevPageNumber - 1)} type="button">
           <BsFillArrowLeftCircleFill />
@@ -95,7 +97,6 @@ export const DataTable = ({ salesData, setPageNumber, setLimit, setLoading }) =>
         <Button onClick={() => setPageNumber((prevPageNumber) => prevPageNumber + 1)} type="button">
           <BsFillArrowRightCircleFill />
         </Button>
-        <Button onClick={() => setLimit((prevLimit) => prevLimit + 5)} type="button">Show more</Button>
       </ButtonContainer>
     </Container>
   );
@@ -105,6 +106,9 @@ const Container = styled.div`
   max-width: 100%;
   height: 300px; // set a fixed height here
   overflow-y: scroll;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 `;
 
 const Table = styled.table`
@@ -141,6 +145,7 @@ border:none;
 cursor:pointer;
 margin:0;
 padding:0;
+font-size:0.8em;
 :hover {
     transform: scale(1.1);
   }
