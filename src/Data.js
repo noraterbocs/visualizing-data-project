@@ -47,6 +47,10 @@ export const Data = () => {
     fetchSalesRankData();
   }, [pageNumber, limit]);
 
+  useEffect(() => {
+    fetchSalesRankData();
+  }, []);
+
   if (loading) {
     return (
       <Loading />
