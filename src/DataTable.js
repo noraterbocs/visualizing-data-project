@@ -108,7 +108,7 @@ const Container = styled.div`
   overflow-y: scroll;
   display:flex;
   flex-direction:column;
-  justify-content:center;
+  justify-content:flex-start;
 `;
 
 const Table = styled.table`
