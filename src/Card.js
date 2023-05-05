@@ -43,7 +43,6 @@ margin:1em;
 p, h3, h4{
     padding:0 1em;
 }
-
 `
 
 const Ranking = styled.h2`

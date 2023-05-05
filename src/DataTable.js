@@ -73,7 +73,7 @@ export const DataTable = ({ salesData, setPageNumber, setLimit, setLoading }) =>
             isOpen={isOpen}
             contentLabel="Example Modal"
             onRequestClose={() => setIsOpen(false)}
-            style={{ overlay: { width: '100%', height: '100%', margin: 'auto', backgroundColor: 'rgb(233 196 228 / 75%)' }, content: { width: 'max-content', height: 'max-content', margin: 'auto' } }}>
+            style={{ overlay: { width: '100%', height: '100%', margin: 'auto', backgroundColor: '#dccaf3ad' }, content: { width: 'max-content', height: 'max-content', margin: 'auto' } }}>
            <div>{singleSalesData !== undefined && <div>
             <p>ID: {singleSalesData.id}</p>
             <p>Date: {singleSalesData.date}</p>
@@ -128,6 +128,13 @@ const Table = styled.table`
   th {
     background-color: #f2f2f2;
     font-weight: bold;
+  }
+
+  tr{
+    cursor:pointer;
+    :hover{
+    background-color: #dccaf3ad
+    }
   }
 `;
 
