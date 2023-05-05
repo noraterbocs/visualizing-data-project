@@ -5,7 +5,6 @@ export const StartPage = () => {
   return (
     <Section>
       <h1>Welcome to my avocado dashboard!</h1>
-      {/* <h2>This website </h2> */}
       <p>The page provides information on sales volume and average prices
         for different regions and time periods in the United States.
       </p>

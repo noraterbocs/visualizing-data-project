@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-// import styled from 'styled-components/macro';
 import { DataTable } from 'DataTable';
 import 'react-accessible-accordion/dist/fancy-example.css';
 import { Card } from 'Card';
